@@ -40,8 +40,23 @@ if __name__ == '__main__':
     prepared_df = pd.read_csv(prepared_data_file, parse_dates=['Start', 'End'], dtype={'Year': str})
 
     # 1. Create a line chart using pd.DataFrame.plot() where `x="Start"` and `y="Participants"`
-
     # 2. Group the data by `Type` and display the chart
     # The general syntax is: `df.groupby("ColNameToGroupBy").plot(x="SomeCol", y="AnotherCol")`.
+    grouped = prepared_df.groupby("Type")
+
+    # Create a separate line plot for each group
+    for group_name, group_data in grouped:
+        ax = group_data.plot(x="Start", y="Participants", label=group_name, kind="line")
+        ax.set_xticks(group_data['Start'])
+        ax.set_xlabel("Start")
+        ax.set_ylabel("Participants")
+        ax.set_title(f"Participants Over Time for Type: {group_name}")
+        plt.show()
+
+
+
+
+
+
 
 

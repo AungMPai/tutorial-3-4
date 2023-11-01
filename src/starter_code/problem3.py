@@ -64,7 +64,7 @@ def prepare_data(df):
        """
     # 1. Drop the list of named columns `['Events', 'Sports', 'Countries'] and
     # assign the result to a new variable named df_prepared
-    df_prepared = ''  # Add code and delete the ''
+    df_prepared = df.drop(columns=['Events', 'Sports', 'Countries'])  # Add code and delete the ''
     return df_prepared
 
 

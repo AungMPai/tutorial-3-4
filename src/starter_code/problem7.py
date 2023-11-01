@@ -60,14 +60,16 @@ def prepare_data(df, df2):
     # 3. Add the year to the Start and End columns to create a full date as a string.
     # Year is int and Start/End are strings. To combine these as a string, convert the Year to string.
     # TODO: Consider if there is a case where the dates span year end e.g. December to January)
-    df_merged["Start"] = + df_merged["Start"] + '-' + df_merged["Year"].astype(str)
+    df_merged["Start"] = df_merged["Start"] + '-' + df_merged["Year"].astype(str)
+    df_merged["End"] = df_merged["End"] + '-'+ df_merged["Year"].astype(str) 
         # Add code to make df_merged["End"] a string format date
 
     # 4. Change the datatype for Start and End from string to date-time format.
     # Pandas to_datetime handles most date formats so the following should work without using the `format=` argument.
     # 'Start' is given below.
-    df_merged['Start'] = pd.to_datetime(df_merged['Start'], format='%d-%b-%Y')
+    df_merged['Start'] = pd.to_datetime(df_merged['Start'])
     # df_merged['Start'] = pd.to_datetime(df_merged['Start'])  # This should also work
+    df_merged['End'] = pd.to_datetime(df_merged['End'])
          # Add the code change the datatype for 'End' from string to date-time format.
 
     df_merged['Start'] = pd.to_datetime(df_merged['Start'], format='%d-%b-%Y')
@@ -75,9 +77,10 @@ def prepare_data(df, df2):
 
     # 5. Add a duration column to the DataFrame that is the difference in days between the
     # start and end dates. The datatype should be integer.
-
+    df_merged['Duration'] = (df_merged ['Start']- df_merged['End'])
     # The output of the above is in timedelta format, this may not suit your needs
     # Change the data type of df_merged['Duration'] to int using .dt.days
+    df_merged['Duration'] = df_merged['Duration'].dt.days
 
     df_prepared = df_merged
     return df_prepared
@@ -94,7 +97,7 @@ if __name__ == '__main__':
     merged_df = prepare_data(df=events_df, df2=noc_df)
 
     # 1. Print the data types of the ['Year', 'Start', 'End'] columns
-
+    print(merged_df[['Year','Start','End']].dtypes)
     # 2. Check the format of the values in  `['Year', 'Start', 'End']` by printing a couple of rows
-
+    print(merged_df[['Year','Start','End']].head(2))
     # After completing step 3, run the code for 1 and 2 again to check the datatypes and values of Start and End

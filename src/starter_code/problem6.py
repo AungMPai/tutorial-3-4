@@ -53,11 +53,11 @@ def prepare_data(df, df2):
     df_fillnans['Type'] = df_fillnans['Type'].str.strip()
 
     # 2. Merge the DataFrames using a left merge. See the tutorial instructions for details.
-    df_merged = ''
+    df_merged = df_fillnans.merge(df2, how='left', left_on = 'Country', right_on ='region')
 
     # 3. Drop either the Country or region column (see problem 3)
 
-    df_prepared = df_merged
+    df_prepared = df_merged.drop(['region'], axis = 1)
 
     return df_prepared
 
@@ -72,8 +72,18 @@ if __name__ == '__main__':
     # Hint: Path(__file__).parent.parent.joinpath('data', 'noc_regions.csv') to reference the file
     # Hint: Use the `usecols=['Col','Col2']` attribute in `pd.read_csv`
 
-    # 4. Create the merged dataframe by passing df (events_df) and df2 (noc_df) to `prepare_data(df, f1)`
+    raw_data_noc = Path(__file__).parent.parent.joinpath('data', 'noc_regions.csv')
+    cols=['NOC','region']
+    noc_df = pd.read_csv(raw_data_noc, usecols = cols)
 
+    # 4. Create the merged dataframe by passing df (events_df) and df2 (noc_df) to `prepare_data(df, f1)`
+    merged_df =prepare_data(df=events_df,df2=noc_df)
+    print(merged_df.head(5))
+    
     # 5. Print any rows in the merged DataFrame that have NaNs
+    nulls_df = merged_df[merged_df.isna().any(axis=1)]
+    print("\nRows with nulls:\n", nulls_df)
 
     # 6. Print all rows of the NOC DataFrame
+    with pd.option_context('display.max_rows', None, ):
+        print(noc_df)

@@ -37,27 +37,29 @@ def print_df_information(df):
     """
     # Print the number of rows and columns in the DataFrame using `.shape()`
     print("\nNumber of rows and columns:\n")
-    print()  # Add your code inside the brackets
+    num_rows, num_columns = df.shape
+    print(f"Number of rows: {num_rows}")
+    print(f"Number of columns: {num_columns}")  # Add your code inside the brackets
 
     # Print the first 7 rows of data using `.head()` and the last 6 rows using `.tail()`
     print("\nFirst 7 rows:\n")
-    print()  # Add your code inside the brackets
+    print(df.head(7))  # Add your code inside the brackets
     print("\nLast 6 rows:\n")
-    print()  # Add your code inside the brackets
+    print(df.tail(6))  # Add your code inside the brackets
 
     #  Print the column labels using `.info()` or `.columns`.
     #  Are there any columns that you don't think will be needed to answer the questions?
     print("\nColumn labels:\n")
-    print()  # Add your code inside the brackets
+    print(df.columns)  # Add your code inside the brackets
 
     # Print the column data types using `.info()` or `.dtypes`
     print("\nColumn data types:\n")
-    print()  # Add your code inside the brackets
+    print(df.dtypes)  # Add your code inside the brackets
 
     # Print general statistics using `.describe()`
     # Why are some columns not shown in the output?
     print("\nStatistics:\n")
-    print()  # Add your code inside the brackets
+    print(df.describe())  # Add your code inside the brackets
 
 
 if __name__ == '__main__':

@@ -76,6 +76,8 @@ def prepare_data(df, df2):
     df_prepared = df_merged
 
     # 1. Save the prepared dataframe to a .csv file
+    prepared_csv_filepath = Path(__file__).parent.parent.joinpath('data', 'paralympics_prepared.csv')
+    df_prepared.to_csv(prepared_csv_filepath, index=False)
     # Hint: Define the file location using Pathlib.path
     # Hint: To avoid saving the pandas index column, use the `index=False` argument
 
